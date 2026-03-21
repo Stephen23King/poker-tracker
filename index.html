@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Poker Tracker</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@600;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background-color: #000;
+      font-family: 'Rajdhani', sans-serif;
+      color: #eee;
+      overflow-x: hidden;
+    }
+
+    /* ── Parallax background ── */
+    .bg-parallax {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 200vh;
+      z-index: 0;
+      filter: brightness(0.45);
+      will-change: transform;
+      background-image:
+        url('https://media.base44.com/images/public/69bf18975ac1b14fde421449/e701452f9_generated_image.png'),
+        url('https://media.base44.com/images/public/69bf18975ac1b14fde421449/e701452f9_generated_image.png');
+      background-size: 100% 50%;
+      background-repeat: no-repeat;
+      background-position: center 0%, center 100%;
+    }
+
+    /* ── Content wrapper ── */
+    .content {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 16px 60px;
+    }
+
+    /* ── Header banner ── */
+    .header-banner {
+      position: relative;
+      width: 100%;
+      max-height: 340px;
+      overflow: hidden;
+      border-radius: 0 0 12px 12px;
+      margin-bottom: 36px;
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.9),
+        0 0 10px 4px rgba(0,0,0,0.85),
+        0 0 22px 8px rgba(0,0,0,0.6);
+    }
+
+    .header-banner img.banner-bg {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .header-banner .title-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.10), rgba(0,0,0,0.42));
+    }
+
+    .title-overlay span {
+      font-family: 'Bebas Neue', cursive;
+      font-size: clamp(72px, 14vw, 130px);
+      letter-spacing: 0.03em;
+      line-height: 0.88;
+      color: #fff;
+      display: block;
+      transform: scaleY(1.12);
+      text-shadow:
+        0 0  8px rgba(255,255,255,0.95),
+        0 0 18px rgba(255,255,255,0.80),
+        0 0 35px rgba(255,255,255,0.60),
+        0 0 60px rgba(255,255,255,0.35),
+        0 0 90px rgba(255,255,255,0.18);
+    }
+
+    /* ── Session header row ── */
+    .session-header-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 32px 0 12px;
+    }
+
+    /* ── Session date input — WHITE text + underline ── */
+    .session-date-input {
+      background: transparent;
+      border: none;
+      border-bottom: 4px solid #ffffff;
+      color: #ffffff;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      outline: none;
+      width: min(60%, 516px);
+      min-width: 220px;
+      padding: 4px 6px 6px;
+      transition: border-color 0.2s, color 0.2s;
+      text-shadow:
+        0 0  6px rgba(255,255,255,0.7),
+        0 0 14px rgba(255,255,255,0.4),
+        0 0 28px rgba(255,255,255,0.2);
+    }
+
+    .session-date-input:focus {
+      border-bottom-color: rgba(255,255,255,0.85);
+    }
+
+    /* placeholder = light gray, not too dark */
+    .session-date-input::placeholder {
+      color: #aaaaaa;
+      font-weight: 600;
+      text-shadow: none;
+    }
+
+    /* ── Buttons row ── */
+    .session-btns {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    /* ── Shared button press base ── */
+    .btn-press {
+      cursor: pointer;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      border-radius: 6px;
+      padding: 5px 13px;
+      white-space: nowrap;
+      user-select: none;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.5);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s, color 0.15s, border-color 0.15s;
+      position: relative;
+      top: 0;
+    }
+
+    .btn-press:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.5);
+      top: 3px;
+    }
+
+    /* ── Remove button ── */
+    .btn-remove {
+      background: transparent;
+      border: 1.5px solid #555;
+      color: #888;
+    }
+
+    .btn-remove:hover {
+      border-color: #e05050;
+      color: #e05050;
+    }
+
+    /* ── Lock button ── */
+    .btn-lock {
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      border: 1.5px solid #666;
+      color: #bbb;
+    }
+
+    .btn-lock:hover {
+      border-color: #c9a227;
+      color: #f0d060;
+    }
+
+    .btn-lock.locked {
+      background: linear-gradient(135deg, #b8860b, #c9a227, #e8c84a, #c9a227);
+      border: 1.5px solid #e8c84a;
+      color: #fff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+      box-shadow: 0 4px 0 rgba(0,0,0,0.5), 0 0 10px rgba(201,162,39,0.4);
+    }
+
+    .btn-lock.locked:hover {
+      background: linear-gradient(135deg, #d4a017, #e8c84a, #fde070, #e8c84a);
+    }
+
+    /* ── Table card ── */
+    .table-card {
+      background: rgba(18, 18, 18, 0.88);
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .table-card table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table-card thead tr { background: #c0392b; }
+
+    .table-card thead th {
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .table-card tbody tr {
+      border-bottom: 1px solid #2a2a2a;
+      transition: background 0.15s;
+    }
+
+    .table-card tbody tr:last-child { border-bottom: none; }
+    .table-card tbody tr:hover { background: rgba(192,57,43,0.12); }
+
+    .table-card tbody td {
+      padding: 13px 18px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .table-card tbody td:first-child { color: #ccc; width: 48%; }
+    .table-card tbody td:last-child  { color: #fff; }
+
+    .table-card tbody td input {
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid rgba(192,57,43,0.5);
+      color: #fff;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      width: 100%;
+      outline: none;
+      padding: 2px 4px;
+      transition: border-color 0.2s;
+    }
+
+    .table-card tbody td input:focus  { border-bottom-color: #e05050; }
+    .table-card tbody td input::placeholder { color: #555; font-weight: 400; }
+
+    /* locked */
+    .table-card.is-locked td input {
+      pointer-events: none;
+      color: #aaa;
+      border-bottom-color: transparent;
+    }
+
+    .profit-positive { color: #4caf50 !important; }
+    .profit-negative { color: #e05050 !important; }
+
+    /* hours played auto cell */
+    .hours-auto {
+      color: #fff;
+      font-size: 1.0rem;
+      font-weight: 600;
+    }
+    .hours-auto.empty { color: #555; font-weight: 400; }
+
+    /* ── Add session button ── */
+    .add-session-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 28px 0 10px;
+    }
+
+    .btn-add-session {
+      background: linear-gradient(135deg, #c0392b, #922b21);
+      border: none;
+      border-radius: 50px;
+      color: #fff;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 12px 36px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 18px rgba(192,57,43,0.45);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-add-session:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(192,57,43,0.6);
+    }
+
+    .btn-add-session .plus-icon { font-size: 1.5rem; line-height: 1; }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      color: #444;
+      font-size: 0.82rem;
+      margin-top: 50px;
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-parallax" id="bgParallax"></div>
+
+  <div class="content">
+
+    <div class="header-banner">
+      <img class="banner-bg"
+           src="https://media.base44.com/images/public/69bf18975ac1b14fde421449/d3e7669ab_generated_image.png"
+           alt="Poker Table" />
+      <div class="title-overlay">
+        <span>POKER</span>
+        <span>TRACKER</span>
+      </div>
+    </div>
+
+    <div id="sessions-container"></div>
+
+    <div class="add-session-wrap">
+      <button class="btn-add-session" onclick="addSession()">
+        <span class="plus-icon">＋</span> Add Session
+      </button>
+    </div>
+
+    <div class="footer">
+      Made by Stephen Johnson &amp; LeRoi Profit<br />© 2025 Poker Tracker App
+    </div>
+  </div>
+
+  <script>
+    /* ─── Background animation — slightly slower ─── */
+    const bg = document.getElementById('bgParallax');
+    let bgOffset = 0, lastTime = null;
+    const SCROLL_SPEED = 0.006; // slower than 0.009
+
+    function animateBg(ts) {
+      if (!lastTime) lastTime = ts;
+      const delta = ts - lastTime;
+      lastTime = ts;
+      bgOffset += window.innerHeight * SCROLL_SPEED * (delta / 1000);
+      if (bgOffset >= window.innerHeight) bgOffset -= window.innerHeight;
+      bg.style.transform = `translateY(-${bgOffset}px)`;
+      requestAnimationFrame(animateBg);
+    }
+    requestAnimationFrame(animateBg);
+
+    /* ─── Storage ─── */
+    const STORAGE_KEY = 'pokerTracker_sessions_v5';
+
+    function loadSessions() {
+      try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : null; }
+      catch { return null; }
+    }
+    function saveSessions(s) {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+      catch(e) { console.warn(e); }
+    }
+    function emptySession() {
+      return { id: Date.now()+Math.random(), locked: false,
+               date:'', startTime:'', endTime:'',
+               buyIn:'', cashout:'', breakTime:'' };
+    }
+
+    /* ─── Time parsing ─── */
+    // Parse a time string like "12:00 am", "4:30pm", "9:00 AM", "14:30" → minutes since midnight, or null
+    function parseTime(str) {
+      if (!str || !str.trim()) return null;
+      str = str.trim();
+
+      // Try HH:MM 24h first
+      let m = str.match(/^(\d{1,2}):(\d{2})$/);
+      if (m) {
+        const h = parseInt(m[1]), min = parseInt(m[2]);
+        if (h >= 0 && h <= 23 && min >= 0 && min <= 59) return h * 60 + min;
+      }
+
+      // Try 12h with am/pm
+      m = str.match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)$/i);
+      if (m) {
+        let h = parseInt(m[1]);
+        const min = m[2] ? parseInt(m[2]) : 0;
+        const ampm = m[3].toLowerCase();
+        if (ampm === 'am') {
+          if (h === 12) h = 0;
+        } else {
+          if (h !== 12) h += 12;
+        }
+        if (h >= 0 && h <= 23 && min >= 0 && min <= 59) return h * 60 + min;
+      }
+
+      return null;
+    }
+
+    function calcHours(startStr, endStr) {
+      const s = parseTime(startStr);
+      const e = parseTime(endStr);
+      if (s === null || e === null) return null;
+
+      let diffMin = e - s;
+      // if end is before start, assume it crossed midnight
+      if (diffMin < 0) diffMin += 24 * 60;
+      if (diffMin === 0) return null;
+
+      return diffMin; // in minutes
+    }
+
+    function formatHours(totalMin) {
+      if (totalMin === null) return null;
+      const hrs = totalMin / 60;
+      const hrsRounded = Math.round(hrs * 10) / 10; // 1 decimal place
+
+      const h = Math.floor(totalMin / 60);
+      const m = totalMin % 60;
+
+      let written = '';
+      if (h > 0 && m > 0) written = `${h} hr${h !== 1 ? 's' : ''} ${m} min${m !== 1 ? 's' : ''}`;
+      else if (h > 0)      written = `${h} hr${h !== 1 ? 's' : ''}`;
+      else                 written = `${m} min${m !== 1 ? 's' : ''}`;
+
+      return `${hrsRounded} hrs / (${written})`;
+    }
+
+    /* ─── Profit ─── */
+    function calcProfit(b, c) {
+      const bv = parseFloat(b), cv = parseFloat(c);
+      if (isNaN(bv)||isNaN(cv)) return '';
+      const p = cv - bv;
+      return (p>=0?'+$':'-$') + Math.abs(p).toFixed(0);
+    }
+    function profitClass(b, c) {
+      const bv=parseFloat(b), cv=parseFloat(c);
+      if(isNaN(bv)||isNaN(cv)) return '';
+      return (cv-bv)>=0?'profit-positive':'profit-negative';
+    }
+
+    /* ─── State ─── */
+    let sessions = loadSessions() || [emptySession()];
+    const MAX = 50;
+
+    /* ─── Render ─── */
+    function render() {
+      saveSessions(sessions);
+      const container = document.getElementById('sessions-container');
+      container.innerHTML = '';
+
+      sessions.forEach((s, idx) => {
+        const profit  = calcProfit(s.buyIn, s.cashout);
+        const pClass  = profitClass(s.buyIn, s.cashout);
+        const locked  = !!s.locked;
+        const ro      = locked ? 'readonly' : '';
+        const lockLbl = locked ? 'Unlock' : 'Lock';
+        const lockCls = locked ? 'btn-press btn-lock locked' : 'btn-press btn-lock';
+
+        const totalMin = calcHours(s.startTime, s.endTime);
+        const hoursDisplay = formatHours(totalMin);
+
+        const wrap = document.createElement('div');
+        wrap.innerHTML = `
+          <div class="session-header-row">
+            <input
+              class="session-date-input"
+              type="text"
+              value="${esc(s.date)}"
+              placeholder="e.g. August 1st"
+              data-field="date"
+              data-idx="${idx}"
+              maxlength="30"
+              ${ro}
+            />
+            <div class="session-btns">
+              ${sessions.length > 1
+                ? `<button class="btn-press btn-remove" data-idx="${idx}" data-action="remove">✕ Remove</button>`
+                : ''}
+              <button class="${lockCls}" data-idx="${idx}" data-action="lock">${lockLbl}</button>
+            </div>
+          </div>
+
+          <div class="table-card${locked?' is-locked':''}">
+            <table>
+              <thead><tr><th>Log</th><th>Breakdown</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td>Start Time</td>
+                  <td><input type="text" placeholder="e.g. 12:00 am" value="${esc(s.startTime)}" data-field="startTime" data-idx="${idx}" maxlength="${MAX}" ${ro}/></td>
+                </tr>
+                <tr>
+                  <td>End Time</td>
+                  <td><input type="text" placeholder="e.g. 4:00 am" value="${esc(s.endTime)}" data-field="endTime" data-idx="${idx}" maxlength="${MAX}" ${ro}/></td>
+                </tr>
+                <tr>
+                  <td>Buy-In</td>
+                  <td><input type="text" placeholder="e.g. 100" value="${esc(s.buyIn)}" data-field="buyIn" data-idx="${idx}" maxlength="${MAX}" ${ro}/></td>
+                </tr>
+                <tr>
+                  <td>Cashout</td>
+                  <td><input type="text" placeholder="e.g. 250" value="${esc(s.cashout)}" data-field="cashout" data-idx="${idx}" maxlength="${MAX}" ${ro}/></td>
+                </tr>
+                <tr>
+                  <td>Profit</td>
+                  <td class="${pClass}" style="font-size:1.1rem;" data-profit="${idx}">
+                    ${profit||'<span style="color:#555;">auto-calculated</span>'}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Break Time</td>
+                  <td><input type="text" placeholder="e.g. 15 mins" value="${esc(s.breakTime)}" data-field="breakTime" data-idx="${idx}" maxlength="${MAX}" ${ro}/></td>
+                </tr>
+                <tr>
+                  <td>Hours Played</td>
+                  <td class="hours-auto${hoursDisplay ? '' : ' empty'}" data-hours="${idx}">
+                    ${hoursDisplay || 'auto-calculated from times'}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        `;
+        container.appendChild(wrap);
+      });
+
+      /* events */
+      container.querySelectorAll('input[data-field]').forEach(el => el.addEventListener('input', onInput));
+
+      container.querySelectorAll('button[data-action]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = parseInt(btn.dataset.idx);
+          if (btn.dataset.action === 'remove') {
+            sessions.splice(idx, 1);
+            render();
+          } else if (btn.dataset.action === 'lock') {
+            sessions[idx].locked = !sessions[idx].locked;
+            render();
+          }
+        });
+      });
+    }
+
+    function onInput(e) {
+      const field = e.target.dataset.field;
+      const idx   = parseInt(e.target.dataset.idx);
+      sessions[idx][field] = e.target.value;
+      saveSessions(sessions);
+
+      // Update profit live
+      if (field==='buyIn'||field==='cashout') {
+        const s = sessions[idx];
+        const td = document.querySelector(`td[data-profit="${idx}"]`);
+        if (td) {
+          td.className = profitClass(s.buyIn, s.cashout);
+          td.style.fontSize = '1.1rem';
+          td.innerHTML = calcProfit(s.buyIn,s.cashout)||'<span style="color:#555;">auto-calculated</span>';
+        }
+      }
+
+      // Update hours played live
+      if (field==='startTime'||field==='endTime') {
+        const s = sessions[idx];
+        const td = document.querySelector(`td[data-hours="${idx}"]`);
+        if (td) {
+          const totalMin = calcHours(s.startTime, s.endTime);
+          const display  = formatHours(totalMin);
+          td.className   = 'hours-auto' + (display ? '' : ' empty');
+          td.textContent = display || 'auto-calculated from times';
+        }
+      }
+    }
+
+    function addSession() {
+      sessions.push(emptySession());
+      render();
+      setTimeout(()=>{
+        const last = document.getElementById('sessions-container').lastElementChild;
+        if (last) last.scrollIntoView({behavior:'smooth',block:'start'});
+      }, 80);
+    }
+
+    function esc(str) {
+      return String(str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    render();
+  </script>
+</body>
+</html>
