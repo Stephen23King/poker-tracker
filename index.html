@@ -17,7 +17,6 @@
       overflow-x: hidden;
     }
 
-    /* ── Parallax background ── */
     .bg-parallax {
       position: fixed;
       top: 0; left: 0;
@@ -34,7 +33,6 @@
       background-position: center 0%, center 100%;
     }
 
-    /* ── Content wrapper ── */
     .content {
       position: relative;
       z-index: 1;
@@ -43,7 +41,6 @@
       padding: 0 16px 60px;
     }
 
-    /* ── Header banner ── */
     .header-banner {
       position: relative;
       width: 100%;
@@ -92,7 +89,6 @@
         0 0 90px rgba(255,255,255,0.18);
     }
 
-    /* ── Session header row ── */
     .session-header-row {
       display: flex;
       align-items: center;
@@ -100,7 +96,6 @@
       margin: 32px 0 12px;
     }
 
-    /* ── Session date input — WHITE text + underline ── */
     .session-date-input {
       background: transparent;
       border: none;
@@ -126,14 +121,12 @@
       border-bottom-color: rgba(255,255,255,0.85);
     }
 
-    /* placeholder = light gray, not too dark */
     .session-date-input::placeholder {
       color: #aaaaaa;
       font-weight: 600;
       text-shadow: none;
     }
 
-    /* ── Buttons row ── */
     .session-btns {
       display: flex;
       align-items: center;
@@ -141,7 +134,6 @@
       flex-shrink: 0;
     }
 
-    /* ── Shared button press base ── */
     .btn-press {
       cursor: pointer;
       font-family: 'Rajdhani', sans-serif;
@@ -165,7 +157,6 @@
       top: 3px;
     }
 
-    /* ── Remove button ── */
     .btn-remove {
       background: transparent;
       border: 1.5px solid #555;
@@ -177,7 +168,6 @@
       color: #e05050;
     }
 
-    /* ── Lock button ── */
     .btn-lock {
       background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
       border: 1.5px solid #666;
@@ -201,7 +191,6 @@
       background: linear-gradient(135deg, #d4a017, #e8c84a, #fde070, #e8c84a);
     }
 
-    /* ── Table card ── */
     .table-card {
       background: rgba(18, 18, 18, 0.88);
       border: 1px solid #2a2a2a;
@@ -240,6 +229,7 @@
       font-size: 1.05rem;
       font-weight: 600;
       letter-spacing: 0.03em;
+      vertical-align: middle;
     }
 
     .table-card tbody td:first-child { color: #ccc; width: 48%; }
@@ -263,25 +253,96 @@
     .table-card tbody td input:focus  { border-bottom-color: #e05050; }
     .table-card tbody td input::placeholder { color: #555; font-weight: 400; }
 
-    /* locked */
     .table-card.is-locked td input {
       pointer-events: none;
       color: #aaa;
       border-bottom-color: transparent;
     }
 
+    .table-card.is-locked .time-mask-input,
+    .table-card.is-locked .meridiem-select {
+      pointer-events: none;
+    }
+
     .profit-positive { color: #4caf50 !important; }
     .profit-negative { color: #e05050 !important; }
 
-    /* hours played auto cell */
-    .hours-auto {
+    .calc-cell {
       color: #fff;
-      font-size: 1.0rem;
+      font-size: 1rem;
       font-weight: 600;
     }
-    .hours-auto.empty { color: #555; font-weight: 400; }
 
-    /* ── Add session button ── */
+    .calc-cell.empty {
+      color: #555 !important;
+      font-weight: 400;
+    }
+
+    .time-entry-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 220px;
+    }
+
+    .time-mask-input {
+      width: 92px !important;
+      min-width: 92px;
+      text-align: left;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.08em;
+      caret-color: #fff;
+    }
+
+    .time-mask-input.empty {
+      color: #777 !important;
+    }
+
+    .meridiem-select {
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid rgba(192,57,43,0.5);
+      color: #fff;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: lowercase;
+      outline: none;
+      padding: 2px 18px 2px 4px;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      min-width: 56px;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #aaa 50%),
+        linear-gradient(135deg, #aaa 50%, transparent 50%);
+      background-position:
+        calc(100% - 11px) calc(50% - 1px),
+        calc(100% - 6px) calc(50% - 1px);
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+    }
+    
+    .meridiem-select option {
+      background: #ffffff;
+      color: #000000;
+    }
+    
+    .table-card.is-locked .meridiem-select {
+      color: #aaa;
+      border-bottom-color: transparent;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #777 50%),
+        linear-gradient(135deg, #777 50%, transparent 50%);
+    }
+
+    .time-mask-input:not(.empty),
+    .meridiem-select.has-value {
+      color: #fff;
+    }
+
     .add-session-wrap {
       display: flex;
       justify-content: center;
@@ -314,7 +375,6 @@
 
     .btn-add-session .plus-icon { font-size: 1.5rem; line-height: 1; }
 
-    /* ── Footer ── */
     .footer {
       text-align: center;
       color: #444;
@@ -343,21 +403,20 @@
     <div id="sessions-container"></div>
 
     <div class="add-session-wrap">
-      <button class="btn-add-session" onclick="addSession()">
+      <button class="btn-add-session" id="addSessionBtn">
         <span class="plus-icon">＋</span> Add Session
       </button>
     </div>
 
     <div class="footer">
-      Made by Stephen Johnson &amp; LeRoi Profit<br />© 2025 Poker Tracker App
+      Made by Stephen Johnson &amp; LeRoi Profit<br />© 2026 Poker Tracker App
     </div>
   </div>
 
   <script>
-    /* ─── Background animation — slightly slower ─── */
     const bg = document.getElementById('bgParallax');
     let bgOffset = 0, lastTime = null;
-    const SCROLL_SPEED = 0.006; // slower than 0.009
+    const SCROLL_SPEED = 0.006;
 
     function animateBg(ts) {
       if (!lastTime) lastTime = ts;
@@ -370,115 +429,240 @@
     }
     requestAnimationFrame(animateBg);
 
-    /* ─── Storage ─── */
-    const STORAGE_KEY = 'pokerTracker_sessions_v5';
+    const STORAGE_KEY = 'pokerTracker_sessions_v6';
+    const MAX_TEXT_LEN = 50;
+
+    function emptySession() {
+      return {
+        id: Date.now() + Math.random(),
+        locked: false,
+        date: '',
+        buyIn: '',
+        cashout: '',
+        startTimeDigits: '',
+        startMeridiem: 'am',
+        endTimeDigits: '',
+        endMeridiem: 'am',
+        breakTimeDigits: ''
+      };
+    }
 
     function loadSessions() {
-      try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : null; }
-      catch { return null; }
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const parsed = raw ? JSON.parse(raw) : null;
+        if (!parsed || !Array.isArray(parsed)) return null;
+        return parsed.map(migrateSession);
+      } catch {
+        return null;
+      }
     }
+
     function saveSessions(s) {
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
-      catch(e) { console.warn(e); }
-    }
-    function emptySession() {
-      return { id: Date.now()+Math.random(), locked: false,
-               date:'', startTime:'', endTime:'',
-               buyIn:'', cashout:'', breakTime:'' };
-    }
-
-    /* ─── Time parsing ─── */
-    // Parse a time string like "12:00 am", "4:30pm", "9:00 AM", "14:30" → minutes since midnight, or null
-    function parseTime(str) {
-      if (!str || !str.trim()) return null;
-      str = str.trim();
-
-      // Try HH:MM 24h first
-      let m = str.match(/^(\d{1,2}):(\d{2})$/);
-      if (m) {
-        const h = parseInt(m[1]), min = parseInt(m[2]);
-        if (h >= 0 && h <= 23 && min >= 0 && min <= 59) return h * 60 + min;
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+      } catch (e) {
+        console.warn(e);
       }
+    }
 
-      // Try 12h with am/pm
-      m = str.match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)$/i);
-      if (m) {
-        let h = parseInt(m[1]);
-        const min = m[2] ? parseInt(m[2]) : 0;
-        const ampm = m[3].toLowerCase();
-        if (ampm === 'am') {
-          if (h === 12) h = 0;
+    function migrateSession(s) {
+      const base = emptySession();
+
+      if (s && typeof s === 'object') {
+        base.id = s.id ?? base.id;
+        base.locked = !!s.locked;
+        base.date = s.date ?? '';
+        base.buyIn = s.buyIn ?? '';
+        base.cashout = s.cashout ?? '';
+
+        if ('startTimeDigits' in s) {
+          base.startTimeDigits = only4Digits(s.startTimeDigits);
+          base.startMeridiem = normalizeMeridiem(s.startMeridiem);
         } else {
-          if (h !== 12) h += 12;
+          const parsedStart = parseLegacyClockString(s.startTime || '');
+          base.startTimeDigits = parsedStart.digits;
+          base.startMeridiem = parsedStart.meridiem;
         }
-        if (h >= 0 && h <= 23 && min >= 0 && min <= 59) return h * 60 + min;
+
+        if ('endTimeDigits' in s) {
+          base.endTimeDigits = only4Digits(s.endTimeDigits);
+          base.endMeridiem = normalizeMeridiem(s.endMeridiem);
+        } else {
+          const parsedEnd = parseLegacyClockString(s.endTime || '');
+          base.endTimeDigits = parsedEnd.digits;
+          base.endMeridiem = parsedEnd.meridiem;
+        }
+
+        if ('breakTimeDigits' in s) {
+          base.breakTimeDigits = only4Digits(s.breakTimeDigits);
+        } else {
+          base.breakTimeDigits = parseLegacyBreakDigits(s.breakTime || '');
+        }
       }
 
-      return null;
+      return base;
     }
 
-    function calcHours(startStr, endStr) {
-      const s = parseTime(startStr);
-      const e = parseTime(endStr);
-      if (s === null || e === null) return null;
+    function parseLegacyClockString(str) {
+      const clean = String(str || '').trim().toLowerCase();
+      if (!clean) return { digits: '', meridiem: 'am' };
 
-      let diffMin = e - s;
-      // if end is before start, assume it crossed midnight
-      if (diffMin < 0) diffMin += 24 * 60;
-      if (diffMin === 0) return null;
+      let m = clean.match(/^(\d{1,2}):(\d{2})\s*(am|pm)$/i);
+      if (m) {
+        const hh = m[1].padStart(2, '0');
+        const mm = m[2];
+        return { digits: `${hh}${mm}`, meridiem: normalizeMeridiem(m[3]) };
+      }
 
-      return diffMin; // in minutes
+      m = clean.match(/^(\d{1,2}):(\d{2})$/);
+      if (m) {
+        const hh = m[1].padStart(2, '0');
+        const mm = m[2];
+        const hour = parseInt(hh, 10);
+        const meridiem = hour >= 12 ? 'pm' : 'am';
+        let h12 = hour % 12;
+        if (h12 === 0) h12 = 12;
+        return { digits: `${String(h12).padStart(2, '0')}${mm}`, meridiem };
+      }
+
+      return { digits: '', meridiem: 'am' };
+    }
+
+    function parseLegacyBreakDigits(str) {
+      const digits = String(str || '').replace(/\D/g, '').slice(0, 4);
+      return digits;
+    }
+
+    function normalizeMeridiem(v) {
+      return String(v).toLowerCase() === 'pm' ? 'pm' : 'am';
+    }
+
+    function only4Digits(v) {
+      return String(v || '').replace(/\D/g, '').slice(0, 4);
+    }
+
+    function esc(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function formatMaskedDigits(digits) {
+      const raw = only4Digits(digits);
+      if (!raw) return '00:00';
+      const padded = raw.padStart(4, '0');
+      return `${padded.slice(0, 2)}:${padded.slice(2)}`;
+    }
+
+    function parseClockMinutes(digits, meridiem) {
+      const raw = only4Digits(digits);
+      if (!raw) return null;
+
+      const padded = raw.padStart(4, '0');
+      let hour = parseInt(padded.slice(0, 2), 10);
+      const minute = parseInt(padded.slice(2), 10);
+
+      if (minute < 0 || minute > 59) return null;
+      if (hour < 1 || hour > 12) return null;
+
+      const mer = normalizeMeridiem(meridiem);
+      if (mer === 'am') {
+        if (hour === 12) hour = 0;
+      } else {
+        if (hour !== 12) hour += 12;
+      }
+
+      return hour * 60 + minute;
+    }
+
+    function parseDurationMinutes(digits) {
+      const raw = only4Digits(digits);
+      if (!raw) return null;
+
+      const padded = raw.padStart(4, '0');
+      const hour = parseInt(padded.slice(0, 2), 10);
+      const minute = parseInt(padded.slice(2), 10);
+
+      if (minute < 0 || minute > 59) return null;
+      return (hour * 60) + minute;
+    }
+
+    function calcTotalMinutes(startDigits, startMeridiem, endDigits, endMeridiem) {
+      const start = parseClockMinutes(startDigits, startMeridiem);
+      const end = parseClockMinutes(endDigits, endMeridiem);
+      if (start === null || end === null) return null;
+
+      let diff = end - start;
+      if (diff < 0) diff += 24 * 60;
+      if (diff === 0) return null;
+
+      return diff;
+    }
+
+    function calcPlayedMinutes(startDigits, startMeridiem, endDigits, endMeridiem, breakDigits) {
+      const total = calcTotalMinutes(startDigits, startMeridiem, endDigits, endMeridiem);
+      const breakMin = parseDurationMinutes(breakDigits);
+
+      if (total === null || breakMin === null) return null;
+
+      const played = total - breakMin;
+      if (played < 0) return null;
+
+      return played;
     }
 
     function formatHours(totalMin) {
       if (totalMin === null) return null;
-      const hrs = totalMin / 60;
-      const hrsRounded = Math.round(hrs * 10) / 10; // 1 decimal place
 
+      const hrsRounded = Math.round((totalMin / 60) * 10) / 10;
       const h = Math.floor(totalMin / 60);
       const m = totalMin % 60;
 
       let written = '';
       if (h > 0 && m > 0) written = `${h} hr${h !== 1 ? 's' : ''} ${m} min${m !== 1 ? 's' : ''}`;
-      else if (h > 0)      written = `${h} hr${h !== 1 ? 's' : ''}`;
-      else                 written = `${m} min${m !== 1 ? 's' : ''}`;
+      else if (h > 0) written = `${h} hr${h !== 1 ? 's' : ''}`;
+      else written = `${m} min${m !== 1 ? 's' : ''}`;
 
       return `${hrsRounded} hrs / (${written})`;
     }
 
-    /* ─── Profit ─── */
     function calcProfit(b, c) {
       const bv = parseFloat(b), cv = parseFloat(c);
-      if (isNaN(bv)||isNaN(cv)) return '';
+      if (isNaN(bv) || isNaN(cv)) return '';
       const p = cv - bv;
-      return (p>=0?'+$':'-$') + Math.abs(p).toFixed(0);
+      return (p >= 0 ? '+$' : '-$') + Math.abs(p).toFixed(0);
     }
+
     function profitClass(b, c) {
-      const bv=parseFloat(b), cv=parseFloat(c);
-      if(isNaN(bv)||isNaN(cv)) return '';
-      return (cv-bv)>=0?'profit-positive':'profit-negative';
+      const bv = parseFloat(b), cv = parseFloat(c);
+      if (isNaN(bv) || isNaN(cv)) return '';
+      return (cv - bv) >= 0 ? 'profit-positive' : 'profit-negative';
     }
 
-    /* ─── State ─── */
     let sessions = loadSessions() || [emptySession()];
-    const MAX = 50;
 
-    /* ─── Render ─── */
     function render() {
       saveSessions(sessions);
       const container = document.getElementById('sessions-container');
       container.innerHTML = '';
 
       sessions.forEach((s, idx) => {
-        const profit  = calcProfit(s.buyIn, s.cashout);
-        const pClass  = profitClass(s.buyIn, s.cashout);
-        const locked  = !!s.locked;
-        const ro      = locked ? 'readonly' : '';
+        const profit = calcProfit(s.buyIn, s.cashout);
+        const pClass = profitClass(s.buyIn, s.cashout);
+        const locked = !!s.locked;
+        const ro = locked ? 'readonly' : '';
+        const disabled = locked ? 'disabled' : '';
         const lockLbl = locked ? 'Unlock' : 'Lock';
         const lockCls = locked ? 'btn-press btn-lock locked' : 'btn-press btn-lock';
 
-        const totalMin = calcHours(s.startTime, s.endTime);
-        const hoursDisplay = formatHours(totalMin);
+        const totalMin = calcTotalMinutes(s.startTimeDigits, s.startMeridiem, s.endTimeDigits, s.endMeridiem);
+        const totalDisplay = formatHours(totalMin);
+
+        const playedMin = calcPlayedMinutes(s.startTimeDigits, s.startMeridiem, s.endTimeDigits, s.endMeridiem, s.breakTimeDigits);
+        const playedDisplay = formatHours(playedMin);
 
         const wrap = document.createElement('div');
         wrap.innerHTML = `
@@ -501,40 +685,109 @@
             </div>
           </div>
 
-          <div class="table-card${locked?' is-locked':''}">
+          <div class="table-card${locked ? ' is-locked' : ''}">
             <table>
               <thead><tr><th>Log</th><th>Breakdown</th></tr></thead>
               <tbody>
                 <tr>
                   <td>Start Time</td>
-                  <td><input type="text" placeholder="e.g. 12:00 am" value="${esc(s.startTime)}" data-field="startTime" data-idx="${idx}" maxlength="${MAX}" ${ro}/></td>
+                  <td>
+                    <div class="time-entry-wrap">
+                      <input
+                        type="text"
+                        class="time-mask-input${s.startTimeDigits ? '' : ' empty'}"
+                        value="${formatMaskedDigits(s.startTimeDigits)}"
+                        data-kind="clock"
+                        data-field="startTimeDigits"
+                        data-idx="${idx}"
+                        inputmode="numeric"
+                        autocomplete="off"
+                        spellcheck="false"
+                        ${ro}
+                      />
+                      <select
+                        class="meridiem-select has-value"
+                        data-field="startMeridiem"
+                        data-idx="${idx}"
+                        ${disabled}
+                      >
+                        <option value="am" ${s.startMeridiem === 'am' ? 'selected' : ''}>am</option>
+                        <option value="pm" ${s.startMeridiem === 'pm' ? 'selected' : ''}>pm</option>
+                      </select>
+                    </div>
+                  </td>
                 </tr>
                 <tr>
                   <td>End Time</td>
-                  <td><input type="text" placeholder="e.g. 4:00 am" value="${esc(s.endTime)}" data-field="endTime" data-idx="${idx}" maxlength="${MAX}" ${ro}/></td>
+                  <td>
+                    <div class="time-entry-wrap">
+                      <input
+                        type="text"
+                        class="time-mask-input${s.endTimeDigits ? '' : ' empty'}"
+                        value="${formatMaskedDigits(s.endTimeDigits)}"
+                        data-kind="clock"
+                        data-field="endTimeDigits"
+                        data-idx="${idx}"
+                        inputmode="numeric"
+                        autocomplete="off"
+                        spellcheck="false"
+                        ${ro}
+                      />
+                      <select
+                        class="meridiem-select has-value"
+                        data-field="endMeridiem"
+                        data-idx="${idx}"
+                        ${disabled}
+                      >
+                        <option value="am" ${s.endMeridiem === 'am' ? 'selected' : ''}>am</option>
+                        <option value="pm" ${s.endMeridiem === 'pm' ? 'selected' : ''}>pm</option>
+                      </select>
+                    </div>
+                  </td>
                 </tr>
                 <tr>
                   <td>Buy-In</td>
-                  <td><input type="text" placeholder="e.g. 100" value="${esc(s.buyIn)}" data-field="buyIn" data-idx="${idx}" maxlength="${MAX}" ${ro}/></td>
+                  <td><input type="text" placeholder="e.g. 100" value="${esc(s.buyIn)}" data-field="buyIn" data-idx="${idx}" maxlength="${MAX_TEXT_LEN}" ${ro} /></td>
                 </tr>
                 <tr>
                   <td>Cashout</td>
-                  <td><input type="text" placeholder="e.g. 250" value="${esc(s.cashout)}" data-field="cashout" data-idx="${idx}" maxlength="${MAX}" ${ro}/></td>
+                  <td><input type="text" placeholder="e.g. 250" value="${esc(s.cashout)}" data-field="cashout" data-idx="${idx}" maxlength="${MAX_TEXT_LEN}" ${ro} /></td>
                 </tr>
                 <tr>
                   <td>Profit</td>
-                  <td class="${pClass}" style="font-size:1.1rem;" data-profit="${idx}">
-                    ${profit||'<span style="color:#555;">auto-calculated</span>'}
+                  <td class="${profit ? pClass : 'calc-cell empty'}" style="font-size:1.1rem;" data-profit="${idx}">
+                    ${profit || 'auto-calculated'}
                   </td>
                 </tr>
                 <tr>
                   <td>Break Time</td>
-                  <td><input type="text" placeholder="e.g. 15 mins" value="${esc(s.breakTime)}" data-field="breakTime" data-idx="${idx}" maxlength="${MAX}" ${ro}/></td>
+                  <td>
+                    <div class="time-entry-wrap">
+                      <input
+                        type="text"
+                        class="time-mask-input${s.breakTimeDigits ? '' : ' empty'}"
+                        value="${formatMaskedDigits(s.breakTimeDigits)}"
+                        data-kind="duration"
+                        data-field="breakTimeDigits"
+                        data-idx="${idx}"
+                        inputmode="numeric"
+                        autocomplete="off"
+                        spellcheck="false"
+                        ${ro}
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Total Hours</td>
+                  <td class="calc-cell${totalDisplay ? '' : ' empty'}" data-total-hours="${idx}">
+                    ${totalDisplay || 'auto-calculated'}
+                  </td>
                 </tr>
                 <tr>
                   <td>Hours Played</td>
-                  <td class="hours-auto${hoursDisplay ? '' : ' empty'}" data-hours="${idx}">
-                    ${hoursDisplay || 'auto-calculated from times'}
+                  <td class="calc-cell${playedDisplay ? '' : ' empty'}" data-hours-played="${idx}">
+                    ${playedDisplay || 'auto-calculated'}
                   </td>
                 </tr>
               </tbody>
@@ -544,12 +797,31 @@
         container.appendChild(wrap);
       });
 
-      /* events */
-      container.querySelectorAll('input[data-field]').forEach(el => el.addEventListener('input', onInput));
+      attachEvents();
+    }
+
+    function attachEvents() {
+      const container = document.getElementById('sessions-container');
+
+      container.querySelectorAll('input[data-field]:not(.time-mask-input)').forEach(el => {
+        el.addEventListener('input', onStandardInput);
+      });
+
+      container.querySelectorAll('.meridiem-select').forEach(el => {
+        el.addEventListener('change', onMeridiemChange);
+      });
+
+      container.querySelectorAll('.time-mask-input').forEach(el => {
+        el.addEventListener('keydown', onMaskedTimeKeydown);
+        el.addEventListener('focus', moveCaretToEnd);
+        el.addEventListener('click', moveCaretToEnd);
+        el.addEventListener('paste', onMaskedPaste);
+      });
 
       container.querySelectorAll('button[data-action]').forEach(btn => {
         btn.addEventListener('click', () => {
-          const idx = parseInt(btn.dataset.idx);
+          const idx = parseInt(btn.dataset.idx, 10);
+
           if (btn.dataset.action === 'remove') {
             sessions.splice(idx, 1);
             render();
@@ -561,48 +833,136 @@
       });
     }
 
-    function onInput(e) {
+    function onStandardInput(e) {
       const field = e.target.dataset.field;
-      const idx   = parseInt(e.target.dataset.idx);
+      const idx = parseInt(e.target.dataset.idx, 10);
       sessions[idx][field] = e.target.value;
       saveSessions(sessions);
+      updateComputedFields(idx);
+    }
 
-      // Update profit live
-      if (field==='buyIn'||field==='cashout') {
-        const s = sessions[idx];
-        const td = document.querySelector(`td[data-profit="${idx}"]`);
-        if (td) {
-          td.className = profitClass(s.buyIn, s.cashout);
-          td.style.fontSize = '1.1rem';
-          td.innerHTML = calcProfit(s.buyIn,s.cashout)||'<span style="color:#555;">auto-calculated</span>';
-        }
+    function onMeridiemChange(e) {
+      const field = e.target.dataset.field;
+      const idx = parseInt(e.target.dataset.idx, 10);
+      sessions[idx][field] = normalizeMeridiem(e.target.value);
+      saveSessions(sessions);
+      updateComputedFields(idx);
+    }
+
+    function moveCaretToEnd(e) {
+      const input = e.target;
+      requestAnimationFrame(() => {
+        const len = input.value.length;
+        try {
+          input.setSelectionRange(len, len);
+        } catch {}
+      });
+    }
+
+    function onMaskedTimeKeydown(e) {
+      const input = e.target;
+      const idx = parseInt(input.dataset.idx, 10);
+      const field = input.dataset.field;
+
+      if (sessions[idx].locked) {
+        e.preventDefault();
+        return;
       }
 
-      // Update hours played live
-      if (field==='startTime'||field==='endTime') {
-        const s = sessions[idx];
-        const td = document.querySelector(`td[data-hours="${idx}"]`);
-        if (td) {
-          const totalMin = calcHours(s.startTime, s.endTime);
-          const display  = formatHours(totalMin);
-          td.className   = 'hours-auto' + (display ? '' : ' empty');
-          td.textContent = display || 'auto-calculated from times';
-        }
+      const key = e.key;
+      let raw = only4Digits(sessions[idx][field]);
+
+      const allowedNavKeys = ['Tab', 'Shift', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
+      if (allowedNavKeys.includes(key)) return;
+
+      if (key === 'Backspace') {
+        e.preventDefault();
+        raw = raw.slice(0, -1);
+        setMaskedField(idx, field, raw, input);
+        return;
+      }
+
+      if (key === 'Delete') {
+        e.preventDefault();
+        raw = '';
+        setMaskedField(idx, field, raw, input);
+        return;
+      }
+
+      if (/^\d$/.test(key)) {
+        e.preventDefault();
+        raw = (raw + key).slice(-4);
+        setMaskedField(idx, field, raw, input);
+        return;
+      }
+
+      e.preventDefault();
+    }
+
+    function onMaskedPaste(e) {
+      e.preventDefault();
+      const input = e.target;
+      const idx = parseInt(input.dataset.idx, 10);
+      const field = input.dataset.field;
+
+      if (sessions[idx].locked) return;
+
+      const pasted = (e.clipboardData || window.clipboardData).getData('text') || '';
+      const raw = only4Digits(pasted);
+      setMaskedField(idx, field, raw, input);
+    }
+
+    function setMaskedField(idx, field, raw, inputEl) {
+      sessions[idx][field] = only4Digits(raw);
+      saveSessions(sessions);
+
+      if (inputEl) {
+        inputEl.value = formatMaskedDigits(sessions[idx][field]);
+        inputEl.classList.toggle('empty', !sessions[idx][field]);
+        moveCaretToEnd({ target: inputEl });
+      }
+
+      updateComputedFields(idx);
+    }
+
+    function updateComputedFields(idx) {
+      const s = sessions[idx];
+
+      const profitTd = document.querySelector(`td[data-profit="${idx}"]`);
+      if (profitTd) {
+        const profit = calcProfit(s.buyIn, s.cashout);
+        profitTd.className = profit ? profitClass(s.buyIn, s.cashout) : 'calc-cell empty';
+        profitTd.style.fontSize = '1.1rem';
+        profitTd.textContent = profit || 'auto-calculated';
+      }
+
+      const totalTd = document.querySelector(`td[data-total-hours="${idx}"]`);
+      if (totalTd) {
+        const totalMin = calcTotalMinutes(s.startTimeDigits, s.startMeridiem, s.endTimeDigits, s.endMeridiem);
+        const totalDisplay = formatHours(totalMin);
+        totalTd.className = 'calc-cell' + (totalDisplay ? '' : ' empty');
+        totalTd.textContent = totalDisplay || 'auto-calculated';
+      }
+
+      const playedTd = document.querySelector(`td[data-hours-played="${idx}"]`);
+      if (playedTd) {
+        const playedMin = calcPlayedMinutes(s.startTimeDigits, s.startMeridiem, s.endTimeDigits, s.endMeridiem, s.breakTimeDigits);
+        const playedDisplay = formatHours(playedMin);
+        playedTd.className = 'calc-cell' + (playedDisplay ? '' : ' empty');
+        playedTd.textContent = playedDisplay || 'auto-calculated';
       }
     }
 
     function addSession() {
       sessions.push(emptySession());
       render();
-      setTimeout(()=>{
+      setTimeout(() => {
         const last = document.getElementById('sessions-container').lastElementChild;
-        if (last) last.scrollIntoView({behavior:'smooth',block:'start'});
+        if (last) last.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 80);
     }
 
-    function esc(str) {
-      return String(str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    }
+    document.getElementById('addSessionBtn').addEventListener('click', addSession);
 
     render();
   </script>
