@@ -437,14 +437,30 @@
       delete: new Audio('deletefx.mp3'),
       lock: new Audio('locksfx.mp3')
     };
-
+    
     sfx.newTable.volume = 1.0;
     sfx.lock.volume = 1.0;
     sfx.delete.volume = 0.5;
-
-    function playSfx(audio) {
+    
+    const sfxCooldowns = {
+      newTable: 0,
+      delete: 0,
+      lock: 0
+    };
+    
+    const SFX_COOLDOWN_MS = 250;
+    
+    function playSfx(name) {
+      const audio = sfx[name];
       if (!audio) return;
+    
+      const now = Date.now();
+      if (now - sfxCooldowns[name] < SFX_COOLDOWN_MS) return;
+    
+      sfxCooldowns[name] = now;
+    
       try {
+        audio.pause();
         audio.currentTime = 0;
         audio.play().catch(() => {});
       } catch {}
@@ -840,11 +856,11 @@
           const idx = parseInt(btn.dataset.idx, 10);
 
           if (btn.dataset.action === 'remove') {
-            playSfx(sfx.delete);
+            playSfx('delete');
             sessions.splice(idx, 1);
             render();
           } else if (btn.dataset.action === 'lock') {
-            playSfx(sfx.lock);
+            playSfx('lock');
             sessions[idx].locked = !sessions[idx].locked;
             render();
           }
@@ -973,7 +989,7 @@
     }
 
     function addSession() {
-      playSfx(sfx.newTable);
+      playSfx('newTable');
       sessions.push(emptySession());
       render();
       setTimeout(() => {
