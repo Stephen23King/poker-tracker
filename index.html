@@ -324,12 +324,12 @@
       background-size: 5px 5px, 5px 5px;
       background-repeat: no-repeat;
     }
-    
+
     .meridiem-select option {
       background: #ffffff;
       color: #000000;
     }
-    
+
     .table-card.is-locked .meridiem-select {
       color: #aaa;
       border-bottom-color: transparent;
@@ -432,6 +432,24 @@
     const STORAGE_KEY = 'pokerTracker_sessions_v6';
     const MAX_TEXT_LEN = 50;
 
+    const sfx = {
+      newTable: new Audio('newtablefx.mp3'),
+      delete: new Audio('deletefx.mp3'),
+      lock: new Audio('locksfx.mp3')
+    };
+
+    sfx.newTable.volume = 1.0;
+    sfx.lock.volume = 1.0;
+    sfx.delete.volume = 0.5;
+
+    function playSfx(audio) {
+      if (!audio) return;
+      try {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      } catch {}
+    }
+
     function emptySession() {
       return {
         id: Date.now() + Math.random(),
@@ -530,8 +548,7 @@
     }
 
     function parseLegacyBreakDigits(str) {
-      const digits = String(str || '').replace(/\D/g, '').slice(0, 4);
-      return digits;
+      return String(str || '').replace(/\D/g, '').slice(0, 4);
     }
 
     function normalizeMeridiem(v) {
@@ -779,15 +796,15 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>Total Hours</td>
-                  <td class="calc-cell${totalDisplay ? '' : ' empty'}" data-total-hours="${idx}">
-                    ${totalDisplay || 'auto-calculated'}
-                  </td>
-                </tr>
-                <tr>
                   <td>Hours Played</td>
                   <td class="calc-cell${playedDisplay ? '' : ' empty'}" data-hours-played="${idx}">
                     ${playedDisplay || 'auto-calculated'}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Total Hours</td>
+                  <td class="calc-cell${totalDisplay ? '' : ' empty'}" data-total-hours="${idx}">
+                    ${totalDisplay || 'auto-calculated'}
                   </td>
                 </tr>
               </tbody>
@@ -823,9 +840,11 @@
           const idx = parseInt(btn.dataset.idx, 10);
 
           if (btn.dataset.action === 'remove') {
+            playSfx(sfx.delete);
             sessions.splice(idx, 1);
             render();
           } else if (btn.dataset.action === 'lock') {
+            playSfx(sfx.lock);
             sessions[idx].locked = !sessions[idx].locked;
             render();
           }
@@ -954,6 +973,7 @@
     }
 
     function addSession() {
+      playSfx(sfx.newTable);
       sessions.push(emptySession());
       render();
       setTimeout(() => {
