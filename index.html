@@ -47,7 +47,7 @@
       max-height: 340px;
       overflow: hidden;
       border-radius: 0 0 12px 12px;
-      margin-bottom: 36px;
+      margin-bottom: 22px;
       box-shadow:
         0 0 0 1px rgba(0,0,0,0.9),
         0 0 10px 4px rgba(0,0,0,0.85),
@@ -87,6 +87,153 @@
         0 0 35px rgba(255,255,255,0.60),
         0 0 60px rgba(255,255,255,0.35),
         0 0 90px rgba(255,255,255,0.18);
+    }
+
+    .pagination-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 0 0 28px;
+    }
+
+    .pagination-bar {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 50px;
+      background: rgba(15, 15, 15, 0.88);
+      border: 1px solid #2a2a2a;
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.65),
+        0 10px 24px rgba(0,0,0,0.30);
+    }
+
+    .page-nav-btn {
+      min-width: 42px;
+      height: 38px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1.5px solid #666;
+      background: linear-gradient(135deg, #161616, #232323);
+      color: #fff;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.5);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, border-color 0.15s, color 0.15s, background 0.15s;
+      position: relative;
+      top: 0;
+    }
+
+    .page-nav-btn:hover:not(:disabled) {
+      border-color: #c0392b;
+      color: #fff;
+      background: linear-gradient(135deg, #232323, #2f2f2f);
+    }
+
+    .page-nav-btn:active:not(:disabled) {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.5);
+      top: 3px;
+    }
+
+    .page-nav-btn:disabled {
+      cursor: default;
+      opacity: 0.42;
+      color: #888;
+      border-color: #444;
+      background: linear-gradient(135deg, #111, #191919);
+    }
+
+    .page-current {
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 0 2px;
+      white-space: nowrap;
+      text-shadow:
+        0 0  6px rgba(255,255,255,0.25),
+        0 0 16px rgba(255,255,255,0.10);
+    }
+
+    .page-dots {
+      color: #888;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      user-select: none;
+    }
+
+    .page-jump-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .page-input {
+      width: 72px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1.5px solid #555;
+      background: rgba(0,0,0,0.35);
+      color: #fff;
+      text-align: center;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .page-input:focus {
+      border-color: #c0392b;
+      box-shadow: 0 0 0 3px rgba(192,57,43,0.16);
+    }
+
+    .page-go-btn {
+      min-width: 52px;
+      height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1.5px solid #666;
+      background: linear-gradient(135deg, #c0392b, #922b21);
+      color: #fff;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.5);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+      position: relative;
+      top: 0;
+    }
+
+    .page-go-btn:hover {
+      filter: brightness(1.08);
+    }
+
+    .page-go-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.5);
+      top: 3px;
+    }
+
+    .page-meta {
+      color: #999;
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
     }
 
     .session-header-row {
@@ -346,7 +493,7 @@
     .add-session-wrap {
       display: flex;
       justify-content: center;
-      margin: 28px 0 10px;
+      margin: 28px 0 14px;
     }
 
     .btn-add-session {
@@ -365,12 +512,18 @@
       align-items: center;
       gap: 10px;
       box-shadow: 0 4px 18px rgba(192,57,43,0.45);
-      transition: transform 0.15s, box-shadow 0.15s;
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
     }
 
-    .btn-add-session:hover {
+    .btn-add-session:hover:not(:disabled) {
       transform: translateY(-2px);
       box-shadow: 0 6px 24px rgba(192,57,43,0.6);
+    }
+
+    .btn-add-session:disabled {
+      cursor: default;
+      opacity: 0.5;
+      box-shadow: 0 4px 18px rgba(192,57,43,0.2);
     }
 
     .btn-add-session .plus-icon { font-size: 1.5rem; line-height: 1; }
@@ -381,6 +534,31 @@
       font-size: 0.82rem;
       margin-top: 50px;
       letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 700px) {
+      .session-header-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .session-date-input {
+        width: 100%;
+      }
+
+      .session-btns {
+        justify-content: flex-start;
+      }
+
+      .pagination-bar {
+        border-radius: 20px;
+        padding: 12px;
+      }
+
+      .page-meta {
+        width: 100%;
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -400,6 +578,8 @@
       </div>
     </div>
 
+    <div id="pagination-top"></div>
+
     <div id="sessions-container"></div>
 
     <div class="add-session-wrap">
@@ -407,6 +587,8 @@
         <span class="plus-icon">＋</span> Add Session
       </button>
     </div>
+
+    <div id="pagination-bottom"></div>
 
     <div class="footer">
       Made by Stephen Johnson &amp; LeRoi Profit<br />© 2026 Poker Tracker App
@@ -429,36 +611,38 @@
     }
     requestAnimationFrame(animateBg);
 
-    const STORAGE_KEY = 'pokerTracker_sessions_v6';
+    const STORAGE_KEY = 'pokerTracker_sessions_v7';
     const MAX_TEXT_LEN = 50;
+    const MAX_SESSIONS = 500;
+    const SESSIONS_PER_PAGE = 20;
 
     const sfx = {
       newTable: new Audio('newtablefx.mp3'),
       delete: new Audio('deletefx.mp3'),
       lock: new Audio('locksfx.mp3')
     };
-    
+
     sfx.newTable.volume = 1.0;
     sfx.lock.volume = 1.0;
     sfx.delete.volume = 0.5;
-    
+
     const sfxCooldowns = {
       newTable: 0,
       delete: 0,
       lock: 0
     };
-    
+
     const SFX_COOLDOWN_MS = 250;
-    
+
     function playSfx(name) {
       const audio = sfx[name];
       if (!audio) return;
-    
+
       const now = Date.now();
       if (now - sfxCooldowns[name] < SFX_COOLDOWN_MS) return;
-    
+
       sfxCooldowns[name] = now;
-    
+
       try {
         audio.pause();
         audio.currentTime = 0;
@@ -486,7 +670,7 @@
         const raw = localStorage.getItem(STORAGE_KEY);
         const parsed = raw ? JSON.parse(raw) : null;
         if (!parsed || !Array.isArray(parsed)) return null;
-        return parsed.map(migrateSession);
+        return parsed.slice(0, MAX_SESSIONS).map(migrateSession);
       } catch {
         return null;
       }
@@ -494,7 +678,7 @@
 
     function saveSessions(s) {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(s.slice(0, MAX_SESSIONS)));
       } catch (e) {
         console.warn(e);
       }
@@ -676,13 +860,77 @@
     }
 
     let sessions = loadSessions() || [emptySession()];
+    let currentPage = 1;
+
+    function totalPages() {
+      return Math.max(1, Math.ceil(sessions.length / SESSIONS_PER_PAGE));
+    }
+
+    function clampPage(page) {
+      const total = totalPages();
+      const num = parseInt(page, 10);
+      if (Number.isNaN(num)) return currentPage;
+      return Math.min(Math.max(num, 1), total);
+    }
+
+    function getPageSlice() {
+      const start = (currentPage - 1) * SESSIONS_PER_PAGE;
+      const end = start + SESSIONS_PER_PAGE;
+      return sessions.slice(start, end).map((session, localIdx) => ({
+        session,
+        actualIndex: start + localIdx
+      }));
+    }
+
+    function renderPagination(targetId) {
+      const target = document.getElementById(targetId);
+      const total = totalPages();
+      const atFirst = currentPage <= 1;
+      const atLast = currentPage >= total;
+
+      target.innerHTML = `
+        <div class="pagination-wrap">
+          <div class="pagination-bar">
+            <button class="page-nav-btn" data-page-action="prev" ${atFirst ? 'disabled' : ''} aria-label="Previous page">‹</button>
+            <span class="page-current">${currentPage}</span>
+            <span class="page-dots">...</span>
+            <div class="page-jump-wrap">
+              <input
+                class="page-input"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                spellcheck="false"
+                maxlength="3"
+                placeholder="#"
+                data-page-input="${targetId}"
+              />
+              <button class="page-go-btn" data-page-action="go" data-target-input="${targetId}">Go</button>
+            </div>
+            <button class="page-nav-btn" data-page-action="next" ${atLast ? 'disabled' : ''} aria-label="Next page">›</button>
+            <span class="page-meta">Page ${currentPage} / ${total} • ${sessions.length} / ${MAX_SESSIONS} Sessions</span>
+          </div>
+        </div>
+      `;
+    }
 
     function render() {
+      if (!sessions.length) {
+        sessions = [emptySession()];
+      }
+
+      currentPage = clampPage(currentPage);
       saveSessions(sessions);
+
+      renderPagination('pagination-top');
+      renderPagination('pagination-bottom');
+
       const container = document.getElementById('sessions-container');
       container.innerHTML = '';
 
-      sessions.forEach((s, idx) => {
+      const pageItems = getPageSlice();
+
+      pageItems.forEach(({ session: s, actualIndex }) => {
         const profit = calcProfit(s.buyIn, s.cashout);
         const pClass = profitClass(s.buyIn, s.cashout);
         const locked = !!s.locked;
@@ -706,15 +954,15 @@
               value="${esc(s.date)}"
               placeholder="e.g. August 1st"
               data-field="date"
-              data-idx="${idx}"
+              data-idx="${actualIndex}"
               maxlength="30"
               ${ro}
             />
             <div class="session-btns">
               ${sessions.length > 1
-                ? `<button class="btn-press btn-remove" data-idx="${idx}" data-action="remove">✕ Remove</button>`
+                ? `<button class="btn-press btn-remove" data-idx="${actualIndex}" data-action="remove">✕ Remove</button>`
                 : ''}
-              <button class="${lockCls}" data-idx="${idx}" data-action="lock">${lockLbl}</button>
+              <button class="${lockCls}" data-idx="${actualIndex}" data-action="lock">${lockLbl}</button>
             </div>
           </div>
 
@@ -732,7 +980,7 @@
                         value="${formatMaskedDigits(s.startTimeDigits)}"
                         data-kind="clock"
                         data-field="startTimeDigits"
-                        data-idx="${idx}"
+                        data-idx="${actualIndex}"
                         inputmode="numeric"
                         autocomplete="off"
                         spellcheck="false"
@@ -741,7 +989,7 @@
                       <select
                         class="meridiem-select has-value"
                         data-field="startMeridiem"
-                        data-idx="${idx}"
+                        data-idx="${actualIndex}"
                         ${disabled}
                       >
                         <option value="am" ${s.startMeridiem === 'am' ? 'selected' : ''}>am</option>
@@ -760,7 +1008,7 @@
                         value="${formatMaskedDigits(s.endTimeDigits)}"
                         data-kind="clock"
                         data-field="endTimeDigits"
-                        data-idx="${idx}"
+                        data-idx="${actualIndex}"
                         inputmode="numeric"
                         autocomplete="off"
                         spellcheck="false"
@@ -769,7 +1017,7 @@
                       <select
                         class="meridiem-select has-value"
                         data-field="endMeridiem"
-                        data-idx="${idx}"
+                        data-idx="${actualIndex}"
                         ${disabled}
                       >
                         <option value="am" ${s.endMeridiem === 'am' ? 'selected' : ''}>am</option>
@@ -780,15 +1028,15 @@
                 </tr>
                 <tr>
                   <td>Buy-In</td>
-                  <td><input type="text" placeholder="e.g. 100" value="${esc(s.buyIn)}" data-field="buyIn" data-idx="${idx}" maxlength="${MAX_TEXT_LEN}" ${ro} /></td>
+                  <td><input type="text" placeholder="e.g. 100" value="${esc(s.buyIn)}" data-field="buyIn" data-idx="${actualIndex}" maxlength="${MAX_TEXT_LEN}" ${ro} /></td>
                 </tr>
                 <tr>
                   <td>Cashout</td>
-                  <td><input type="text" placeholder="e.g. 250" value="${esc(s.cashout)}" data-field="cashout" data-idx="${idx}" maxlength="${MAX_TEXT_LEN}" ${ro} /></td>
+                  <td><input type="text" placeholder="e.g. 250" value="${esc(s.cashout)}" data-field="cashout" data-idx="${actualIndex}" maxlength="${MAX_TEXT_LEN}" ${ro} /></td>
                 </tr>
                 <tr>
                   <td>Profit</td>
-                  <td class="${profit ? pClass : 'calc-cell empty'}" style="font-size:1.1rem;" data-profit="${idx}">
+                  <td class="${profit ? pClass : 'calc-cell empty'}" style="font-size:1.1rem;" data-profit="${actualIndex}">
                     ${profit || 'auto-calculated'}
                   </td>
                 </tr>
@@ -802,7 +1050,7 @@
                         value="${formatMaskedDigits(s.breakTimeDigits)}"
                         data-kind="duration"
                         data-field="breakTimeDigits"
-                        data-idx="${idx}"
+                        data-idx="${actualIndex}"
                         inputmode="numeric"
                         autocomplete="off"
                         spellcheck="false"
@@ -813,13 +1061,13 @@
                 </tr>
                 <tr>
                   <td>Hours Played</td>
-                  <td class="calc-cell${playedDisplay ? '' : ' empty'}" data-hours-played="${idx}">
+                  <td class="calc-cell${playedDisplay ? '' : ' empty'}" data-hours-played="${actualIndex}">
                     ${playedDisplay || 'auto-calculated'}
                   </td>
                 </tr>
                 <tr>
                   <td>Total Hours</td>
-                  <td class="calc-cell${totalDisplay ? '' : ' empty'}" data-total-hours="${idx}">
+                  <td class="calc-cell${totalDisplay ? '' : ' empty'}" data-total-hours="${actualIndex}">
                     ${totalDisplay || 'auto-calculated'}
                   </td>
                 </tr>
@@ -829,6 +1077,11 @@
         `;
         container.appendChild(wrap);
       });
+
+      const addBtn = document.getElementById('addSessionBtn');
+      const atMax = sessions.length >= MAX_SESSIONS;
+      addBtn.disabled = atMax;
+      addBtn.title = atMax ? `Maximum of ${MAX_SESSIONS} sessions reached.` : '';
 
       attachEvents();
     }
@@ -856,8 +1109,10 @@
           const idx = parseInt(btn.dataset.idx, 10);
 
           if (btn.dataset.action === 'remove') {
+            if (sessions.length <= 1) return;
             playSfx('delete');
             sessions.splice(idx, 1);
+            currentPage = clampPage(currentPage);
             render();
           } else if (btn.dataset.action === 'lock') {
             playSfx('lock');
@@ -866,6 +1121,75 @@
           }
         });
       });
+
+      document.querySelectorAll('[data-page-action="prev"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (currentPage <= 1) return;
+          currentPage -= 1;
+          render();
+          scrollToTopPagination();
+        });
+      });
+
+      document.querySelectorAll('[data-page-action="next"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (currentPage >= totalPages()) return;
+          currentPage += 1;
+          render();
+          scrollToTopPagination();
+        });
+      });
+
+      document.querySelectorAll('[data-page-action="go"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.dataset.targetInput;
+          goToTypedPage(targetId);
+        });
+      });
+
+      document.querySelectorAll('.page-input').forEach(input => {
+        input.addEventListener('input', () => {
+          input.value = input.value.replace(/\D/g, '').slice(0, 3);
+        });
+
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            goToTypedPage(input.dataset.pageInput);
+          }
+        });
+      });
+    }
+
+    function goToTypedPage(targetId) {
+      const input = document.querySelector(`[data-page-input="${targetId}"]`);
+      if (!input) return;
+
+      const raw = input.value.trim();
+      if (!raw) return;
+
+      const requested = parseInt(raw, 10);
+      if (Number.isNaN(requested)) {
+        input.value = '';
+        return;
+      }
+
+      const nextPage = clampPage(requested);
+      if (nextPage === currentPage) {
+        input.value = '';
+        return;
+      }
+
+      currentPage = nextPage;
+      render();
+      scrollToTopPagination();
+    }
+
+    function scrollToTopPagination() {
+      const topPager = document.getElementById('pagination-top');
+      if (topPager) {
+        topPager.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
 
     function onStandardInput(e) {
@@ -989,9 +1313,12 @@
     }
 
     function addSession() {
+      if (sessions.length >= MAX_SESSIONS) return;
       playSfx('newTable');
       sessions.push(emptySession());
+      currentPage = totalPages();
       render();
+
       setTimeout(() => {
         const last = document.getElementById('sessions-container').lastElementChild;
         if (last) last.scrollIntoView({ behavior: 'smooth', block: 'start' });
